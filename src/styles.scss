@@ -1,7 +1,6 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 // Plus imports for other components in your app.
 @tailwind base;
 @tailwind components;
@@ -15,20 +14,27 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $frontend_onlineshop-primary: mat.define-palette(mat.$indigo-palette);
-$frontend_onlineshop-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$frontend_onlineshop-accent: mat.define-palette(
+  mat.$pink-palette,
+  A200,
+  A100,
+  A400
+);
 
 // The warn palette is optional (defaults to red).
 $frontend_onlineshop-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$frontend_onlineshop-theme: mat.define-light-theme((
-  color: (
-    primary: $frontend_onlineshop-primary,
-    accent: $frontend_onlineshop-accent,
-    warn: $frontend_onlineshop-warn,
+$frontend_onlineshop-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $frontend_onlineshop-primary,
+      accent: $frontend_onlineshop-accent,
+      warn: $frontend_onlineshop-warn,
+    ),
   )
-));
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -37,5 +43,69 @@ $frontend_onlineshop-theme: mat.define-light-theme((
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+:root {
+  --shortTransition: 0.3s;
+  --longTransition: 0.6s;
+
+  // --accent: #9AC0D4;
+  // --second: #28408b;
+  --accent: #ea00ff;
+  --second: #00ff26;
+
+  --accent-X: rgba(234, 0, 255, 0.8);
+  --second-X: rgba(0, 255, 38, 0.8);
+
+  --accent-XX: rgba(234, 0, 255, 0.4);
+  --second-XX: rgba(0, 255, 38, 0.4);
+
+  --background: #f2fffe;
+  --background-X: #ffffff8a;
+
+  --toolbar: rgb(251, 251, 251);
+  --textcolor: #212121;
+
+  --fontsize: 20px;
+}
+
+// start region scrollbar
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+  background-color: var(--toolbar);
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  transition: var(--shortTransition);
+  // box-shadow: inset 0 0 5px rgb(255, 255, 255, 0.4);
+
+  border-radius: 1px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  transition: var(--shortTransition);
+  background: var(--accent-X);
+
+  border-radius: 1px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  transition: var(--shortTransition);
+  background: var(--accent);
+}
+// end region scrollbar
+
+html {
+  scroll-behavior: smooth;
+}

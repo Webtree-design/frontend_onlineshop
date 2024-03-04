@@ -1,4 +1,4 @@
-<div class="items">
+<!-- <div class="items">
   <div *ngFor="let item of items$ | async">
     <b>ID: </b> {{ item._id }}<br />
     <b>Title: </b>{{ item.title }}<br />
@@ -6,5 +6,134 @@
     <br />
     <br />
     <br />
+  </div>
+</div> -->
+
+<div class="items">
+  <!-- //////////HEADER////////// -->
+  <div class="mx-auto w-[100%] max-w-screen-xl">
+    <div
+      class="gap-x-4 w-[100%] flex flex-row items-center justify-center p-3 search-form"
+    >
+      <mat-form-field>
+        <mat-label>Was suchen Sie?</mat-label>
+        <input
+          #search
+          matInput
+          type="text"
+          [(ngModel)]="search.value"
+          (keyup.enter)="filterSearchbar(search.value)"
+        />
+        <!-- *ngIf="!isFilterAppliedSeachBar" -->
+        <button
+          (click)="filterSearchbar(search.value)"
+          matSuffix
+          mat-icon-button
+          aria-label="search"
+          class="mr-2"
+        >
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+      <button
+        (click)="filterPanel.expanded = !filterPanel.expanded"
+        matSuffix
+        mat-icon-button
+        aria-label="filter"
+      >
+        <mat-icon>filter_list</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-accordion multi class="filter-form">
+    <mat-expansion-panel #filterPanel="matExpansionPanel">
+      <div class="px-3">
+        <mat-form-field>
+          <mat-label>Marke</mat-label>
+          <mat-select
+            [(ngModel)]="selectedBrand"
+            (selectionChange)="onBrandChange()"
+          >
+            <mat-option
+              [value]="brand"
+              *ngFor="let brand of getObjectKeys(filters)"
+            >
+              {{ brand }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Modell</mat-label>
+          <mat-select
+            [(ngModel)]="selectedModell"
+            [disabled]="!selectedBrand"
+            (selectionChange)="onModellChange()"
+          >
+            <mat-option
+              *ngFor="let modell of getObjectKeys(filters[selectedBrand])"
+              [value]="modell"
+            >
+              {{ modell }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Motor</mat-label>
+          <mat-select [(ngModel)]="selectedMotor" [disabled]="!selectedModell">
+            <mat-option
+              *ngFor="
+                let value of getObjectKeys(
+                  filters[selectedBrand]?.[selectedModell]
+                )
+              "
+              [value]="filters[selectedBrand][selectedModell][value]"
+            >
+              {{ filters[selectedBrand][selectedModell][value] }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <button mat-raised-button color="primary" (click)="submitFilter()">
+        Submit
+      </button>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <!-- //////////HEADER////////// -->
+  <div
+    class="grid gap-x-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 mx-auto px-6"
+  >
+    <div class="relative mb-12" *ngFor="let item of items$ | async">
+      <a class="cursor-pointer" (click)="openDetails(item)">
+        <div
+          class="relative mb-6 overflow-hidden rounded-lg bg-cover bg-no-repeat shadow-lg dark:shadow-black/20 bg-[50%]"
+          data-te-ripple-init
+          data-te-ripple-color="light"
+        >
+          <img [src]="" class="w-full" [alt]="item.image" />
+
+          <div
+            class="mask absolute top-0 right-0 bottom-0 left-0 h-full w-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100 bg-[hsla(0,0%,98.4%,0.2)]"
+          ></div>
+        </div>
+        <h5 class="mb-4 text-lg font-bold">{{ item.title }}</h5>
+        <div
+          class="mb-4 flex flex-wrap items-center text-sm font-medium text-danger dark:text-danger-500 justify-start"
+        >
+          <div class="tagButton m-1 px-2 py-1" *ngFor="let tag of item.tags">
+            {{ tag }}
+          </div>
+        </div>
+        <p class="text-neutral-500 dark:text-neutral-300">
+          {{ item.description }}
+        </p>
+        <p class="text-neutral-500 dark:text-neutral-300">
+          Liked From {{ item.favorite.length }} Users
+        </p>
+      </a>
+    </div>
   </div>
 </div>

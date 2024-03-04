@@ -38,21 +38,21 @@ export class DataService {
       }
     );
   }
-}
 
-// public async getProducts(pageNumber: number, pageSize: number) {
-//   await this.setHeaders();
-//   console.log('getProductsAll()');
-//   try {
-//     const response = this.http.get<any>(
-//       `${this.apiUrl}/products/get?pageNumber=${pageNumber}&pageSize=${pageSize}`,
-//       {
-//         headers: this.headers,
-//         params: this.params,
-//       }
-//     );
-//     return firstValueFrom(response);
-//   } catch (error) {
-//     console.error('Error fetching data product:', error);
-//   }
-// }
+  public getFilteredData(
+    brand: string,
+    modell: string,
+    motor: string,
+    pageNumber: number,
+    pageSize: number
+  ) {
+    return this.http.post<any>(
+      `${this.apiUrl}/products/filter?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      { brand, modell, motor },
+      {
+        headers: this.headers,
+        params: this.params,
+      }
+    );
+  }
+}
