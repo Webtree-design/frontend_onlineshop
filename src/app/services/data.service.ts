@@ -29,9 +29,18 @@ export class DataService {
     this.params = new HttpParams().set('kunde', env.customer);
   }
 
-  public getData(pageNumber: number, pageSize: number) {
-    return this.http.get<any>(
+  public getData(
+    pageNumber: number,
+    pageSize: number,
+    brand: string,
+    modell: string,
+    motor: string
+  ) {
+    this.setHeaders();
+    console.log('getData()');
+    return this.http.post<any>(
       `${this.apiUrl}/products/get?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      { brand, modell, motor },
       {
         headers: this.headers,
         params: this.params,
@@ -39,20 +48,12 @@ export class DataService {
     );
   }
 
-  public getFilteredData(
-    brand: string,
-    modell: string,
-    motor: string,
-    pageNumber: number,
-    pageSize: number
-  ) {
-    return this.http.post<any>(
-      `${this.apiUrl}/products/filter?pageNumber=${pageNumber}&pageSize=${pageSize}`,
-      { brand, modell, motor },
-      {
-        headers: this.headers,
-        params: this.params,
-      }
-    );
+  public async getConfig() {
+    console.log('getConfig()');
+    const response = this.http.get<any>(`${this.apiUrl}/config/filter/get`, {
+      headers: this.headers,
+      params: this.params,
+    });
+    return firstValueFrom(response);
   }
 }

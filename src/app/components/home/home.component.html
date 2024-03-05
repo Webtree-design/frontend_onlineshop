@@ -21,12 +21,12 @@
           #search
           matInput
           type="text"
-          [(ngModel)]="search.value"
-          (keyup.enter)="filterSearchbar(search.value)"
+          [(ngModel)]="searchValue"
+          (keyup.enter)="filterSearchbar(searchValue)"
         />
         <!-- *ngIf="!isFilterAppliedSeachBar" -->
         <button
-          (click)="filterSearchbar(search.value)"
+          (click)="filterSearchbar(searchValue)"
           matSuffix
           mat-icon-button
           aria-label="search"
@@ -57,7 +57,7 @@
           >
             <mat-option
               [value]="brand"
-              *ngFor="let brand of getObjectKeys(filters)"
+              *ngFor="let brand of getObjectKeys(filter)"
             >
               {{ brand }}
             </mat-option>
@@ -72,7 +72,7 @@
             (selectionChange)="onModellChange()"
           >
             <mat-option
-              *ngFor="let modell of getObjectKeys(filters[selectedBrand])"
+              *ngFor="let modell of getObjectKeys(filter[selectedBrand])"
               [value]="modell"
             >
               {{ modell }}
@@ -86,18 +86,21 @@
             <mat-option
               *ngFor="
                 let value of getObjectKeys(
-                  filters[selectedBrand]?.[selectedModell]
+                  filter[selectedBrand]?.[selectedModell]
                 )
               "
-              [value]="filters[selectedBrand][selectedModell][value]"
+              [value]="filter[selectedBrand][selectedModell][value]"
             >
-              {{ filters[selectedBrand][selectedModell][value] }}
+              {{ filter[selectedBrand][selectedModell][value] }}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
       <button mat-raised-button color="primary" (click)="submitFilter()">
         Submit
+      </button>
+      <button mat-raised-button color="primary" (click)="clearFilter()">
+        clearfilter
       </button>
     </mat-expansion-panel>
   </mat-accordion>
