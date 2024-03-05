@@ -21,10 +21,12 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  searchValue: string = '';
+  searchbarValue: string = '';
   selectedBrand: string = '';
   selectedModell: string = '';
   selectedMotor: string = '';
+
+  hideArrow: string = 'hideArrow';
 
   //   'BMW Motorcycles': {
   //     'R 1100 (01.1993 - 12.2005)': [
@@ -87,12 +89,14 @@ export class HomeComponent {
   }
 
   submitFilter() {
+    console.log(this.selectedBrand);
     this.currentPage = 0;
     this.pageSize = 25;
     this.getData();
   }
 
   clearFilter() {
+    this.searchbarValue = '';
     this.selectedBrand = '';
     this.selectedModell = '';
     this.selectedMotor = '';
@@ -144,7 +148,8 @@ export class HomeComponent {
           this.pageSize,
           this.selectedBrand,
           this.selectedModell,
-          this.selectedMotor
+          this.selectedMotor,
+          this.searchbarValue
         )
         .subscribe((data: any) => {
           this.obsArray.next(data);
@@ -169,7 +174,8 @@ export class HomeComponent {
               this.pageSize,
               this.selectedBrand,
               this.selectedModell,
-              this.selectedMotor
+              this.selectedMotor,
+              this.searchbarValue
             ),
           ]).subscribe((data: Array<Array<any>>) => {
             const newArr = [...data[0], ...data[1]];
@@ -182,11 +188,12 @@ export class HomeComponent {
 
   openDetails(item: any) {}
 
-  filterSearchbar(searchValue: any) {
-    if (!searchValue) return;
-    console.log(searchValue);
-  }
-  openFilter() {
-    console.log('openFilter()');
+  submitFilterSearchbar(searchbarValue: any) {
+    // if (!searchbarValue) return;
+    this.currentPage = 0;
+    this.pageSize = 25;
+    this.searchbarValue = searchbarValue + '';
+    console.log(this.searchbarValue);
+    this.getData();
   }
 }

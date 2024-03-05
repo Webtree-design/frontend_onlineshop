@@ -34,13 +34,14 @@ export class DataService {
     pageSize: number,
     brand: string,
     modell: string,
-    motor: string
+    motor: string,
+    searchbarValue: string
   ) {
     this.setHeaders();
     console.log('getData()');
     return this.http.post<any>(
       `${this.apiUrl}/products/get?pageNumber=${pageNumber}&pageSize=${pageSize}`,
-      { brand, modell, motor },
+      { brand, modell, motor, searchbarValue },
       {
         headers: this.headers,
         params: this.params,

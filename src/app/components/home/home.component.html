@@ -9,9 +9,9 @@
   </div>
 </div> -->
 
-<div class="items">
+<div class="items" style="background-color: var(--background)">
   <!-- //////////HEADER////////// -->
-  <div class="mx-auto w-[100%] max-w-screen-xl">
+  <div class="mx-auto w-[100%] max-w-screen-sm">
     <div
       class="gap-x-4 w-[100%] flex flex-row items-center justify-center p-3 search-form"
     >
@@ -21,12 +21,12 @@
           #search
           matInput
           type="text"
-          [(ngModel)]="searchValue"
-          (keyup.enter)="filterSearchbar(searchValue)"
+          [(ngModel)]="searchbarValue"
+          (keyup.enter)="submitFilterSearchbar(searchbarValue)"
         />
-        <!-- *ngIf="!isFilterAppliedSeachBar" -->
+
         <button
-          (click)="filterSearchbar(searchValue)"
+          (click)="submitFilterSearchbar(searchbarValue)"
           matSuffix
           mat-icon-button
           aria-label="search"
@@ -46,64 +46,97 @@
     </div>
   </div>
 
-  <mat-accordion multi class="filter-form">
-    <mat-expansion-panel #filterPanel="matExpansionPanel">
-      <div class="px-3">
-        <mat-form-field>
-          <mat-label>Marke</mat-label>
-          <mat-select
-            [(ngModel)]="selectedBrand"
-            (selectionChange)="onBrandChange()"
-          >
-            <mat-option
-              [value]="brand"
-              *ngFor="let brand of getObjectKeys(filter)"
-            >
-              {{ brand }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+  <div class="mx-auto w-[100%] max-w-screen-sm">
+    <mat-accordion multi class="filter-form">
+      <mat-expansion-panel #filterPanel="matExpansionPanel">
+        <div class="px-3">
+          <mat-form-field class="relative">
+            <mat-label>Marke</mat-label>
 
-        <mat-form-field>
-          <mat-label>Modell</mat-label>
-          <mat-select
-            [(ngModel)]="selectedModell"
-            [disabled]="!selectedBrand"
-            (selectionChange)="onModellChange()"
-          >
-            <mat-option
-              *ngFor="let modell of getObjectKeys(filter[selectedBrand])"
-              [value]="modell"
+            <mat-select
+              [(ngModel)]="selectedBrand"
+              [ngClass]="selectedBrand ? 'hideArrow' : ''"
+              (selectionChange)="onBrandChange()"
             >
-              {{ modell }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+              <mat-option
+                [value]="brand"
+                *ngFor="let brand of getObjectKeys(filter)"
+              >
+                {{ brand }}
+              </mat-option>
+            </mat-select>
+            <mat-icon
+              (click)="selectedBrand = ''"
+              style="right: 0; bottom: 15px"
+              class="absolute"
+              *ngIf="selectedBrand"
+              >clear</mat-icon
+            >
+          </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>Motor</mat-label>
-          <mat-select [(ngModel)]="selectedMotor" [disabled]="!selectedModell">
-            <mat-option
-              *ngFor="
+          <mat-form-field class="relative">
+            <mat-label>Modell</mat-label>
+            <mat-select
+              [(ngModel)]="selectedModell"
+              [ngClass]="selectedModell ? 'hideArrow' : ''"
+              [disabled]="!selectedBrand"
+              (selectionChange)="onModellChange()"
+            >
+              <mat-option
+                *ngFor="let modell of getObjectKeys(filter[selectedBrand])"
+                [value]="modell"
+              >
+                {{ modell }}
+              </mat-option>
+            </mat-select>
+            <mat-icon
+              (click)="selectedModell = ''"
+              style="right: 0; bottom: 15px"
+              class="absolute"
+              *ngIf="selectedModell"
+              >clear</mat-icon
+            >
+          </mat-form-field>
+
+          <mat-form-field class="relative">
+            <mat-label>Motor</mat-label>
+            <mat-select
+              [(ngModel)]="selectedMotor"
+              [ngClass]="selectedMotor ? 'hideArrow' : ''"
+              [disabled]="!selectedModell"
+            >
+              <mat-option
+                *ngFor="
                 let value of getObjectKeys(
                   filter[selectedBrand]?.[selectedModell]
                 )
               "
-              [value]="filter[selectedBrand][selectedModell][value]"
+                [value]="filter[selectedBrand][selectedModell][value]"
+              >
+                {{ filter[selectedBrand][selectedModell][value] }}
+              </mat-option>
+            </mat-select>
+            <mat-icon
+              (click)="selectedMotor = ''"
+              style="right: 0; bottom: 15px"
+              class="absolute"
+              *ngIf="selectedMotor"
+              >clear</mat-icon
             >
-              {{ filter[selectedBrand][selectedModell][value] }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <button mat-raised-button color="primary" (click)="submitFilter()">
-        Submit
-      </button>
-      <button mat-raised-button color="primary" (click)="clearFilter()">
-        clearfilter
-      </button>
-    </mat-expansion-panel>
-  </mat-accordion>
+          </mat-form-field>
+        </div>
+        <div class="px-3 pb-6 filter-form-buttons flex">
+          <span class="basis-3/12"></span>
+          <div class="basis-6/12">
+            <button mat-raised-button (click)="submitFilter()">Suchen</button>
+          </div>
+          <span class="basis-3/12">
+            <span class="flex flex-row justify-center items-center"> </span>
+          </span>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
 
   <!-- //////////HEADER////////// -->
   <div
@@ -130,12 +163,10 @@
             {{ tag }}
           </div>
         </div>
-        <p class="text-neutral-500 dark:text-neutral-300">
+        <p class="">
           {{ item.description }}
         </p>
-        <p class="text-neutral-500 dark:text-neutral-300">
-          Liked From {{ item.favorite.length }} Users
-        </p>
+        <p class="">Liked From {{ item.favorite.length }} Users</p>
       </a>
     </div>
   </div>

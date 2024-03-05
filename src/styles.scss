@@ -58,16 +58,16 @@ body {
 
   // --accent: #9AC0D4;
   // --second: #28408b;
-  --accent: #ea00ff;
-  --second: #00ff26;
+  --accent: rgb(166, 0, 0);
+  --second: rgb(85, 0, 0);
 
-  --accent-X: rgba(234, 0, 255, 0.8);
-  --second-X: rgba(0, 255, 38, 0.8);
+  --accent-X: rgb(166, 0, 0, 0.8);
+  --second-X: rgb(85, 0, 0, 0.8);
 
-  --accent-XX: rgba(234, 0, 255, 0.4);
-  --second-XX: rgba(0, 255, 38, 0.4);
+  --accent-XX: rgb(166, 0, 0, 0.4);
+  --second-XX: rgb(85, 0, 0, 0.4);
 
-  --background: #f2fffe;
+  --background: #d4d4d4;
   --background-X: #ffffff8a;
 
   --toolbar: rgb(251, 251, 251);
@@ -76,11 +76,16 @@ body {
   --fontsize: 20px;
 }
 
+* {
+  --mat-option-selected-state-label-text-color: var(--textcolor) !important;
+  --mat-option-label-text-color: var(--textcolor) !important;
+}
+
 // start region scrollbar
 /* width */
 ::-webkit-scrollbar {
   width: 7px;
-  background-color: var(--toolbar);
+  background-color: var(--background);
 }
 
 /* Track */
