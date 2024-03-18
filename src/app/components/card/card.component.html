@@ -1,1 +1,14 @@
 <p>card works!</p>
+
+<ul class="w-96 text-surface" *ngFor="let item of card">
+  <li class="w-full border-b-2 py-4">
+    <span *ngIf="item.missing">Produkt wurde gelöscht</span>
+
+    <div *ngIf="!item.missing">
+      <p>{{ item.title }}</p>
+      <mat-icon (click)="removeFromCard(item)">remove</mat-icon>
+      <mat-icon (click)="addToCard(item)">add</mat-icon>
+    </div>
+    <div>{{ item.customersValue }}</div>
+  </li>
+</ul>

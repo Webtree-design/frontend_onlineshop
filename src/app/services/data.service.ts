@@ -22,11 +22,14 @@ export class DataService {
     console.log('setHeaders()');
     // const cookie = await this.cookieService.get('token');
     const cookie = '123123123123123';
+    const userID = await this.cookieService.getUserID();
     this.headers = new HttpHeaders({
       'Content-Type': 'application/json',
       authorization: `${cookie}`,
     });
-    this.params = new HttpParams().set('kunde', env.customer);
+    this.params = new HttpParams()
+      .set('kunde', env.customer)
+      .set('userID', userID!);
   }
 
   public getData(
@@ -52,6 +55,33 @@ export class DataService {
   public async getConfig() {
     console.log('getConfig()');
     const response = this.http.get<any>(`${this.apiUrl}/config/filter/get`, {
+      headers: this.headers,
+      params: this.params,
+    });
+    return firstValueFrom(response);
+  }
+
+  public async getCard() {
+    console.log('getCard()');
+    const response = this.http.get<any>(`${this.apiUrl}/card/get`, {
+      headers: this.headers,
+      params: this.params,
+    });
+    return firstValueFrom(response);
+  }
+
+  public async addToCard(item: any) {
+    console.log('addToCard()');
+    const response = this.http.post<any>(`${this.apiUrl}/card/add`, item, {
+      headers: this.headers,
+      params: this.params,
+    });
+    return firstValueFrom(response);
+  }
+
+  public async removeFromCard(item: any) {
+    console.log('removeFromCard()');
+    const response = this.http.post<any>(`${this.apiUrl}/card/remove`, item, {
       headers: this.headers,
       params: this.params,
     });

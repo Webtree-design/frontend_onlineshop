@@ -182,7 +182,8 @@
         <p class="">
           {{ item.description }}
         </p>
-        <p class="">Liked From {{ item.favorite.length }} Users</p>
+        <button (click)="addToCard(item)">Add to card</button>
+       
       </a>
     </div>
   </div>
