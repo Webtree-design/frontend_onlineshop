@@ -1,1 +1,19 @@
+<div
+  class="fixed flex justify-center items-center w-[100%] h-auto overflow-hidden"
+  style="
+    bottom: 0;
+    background-color: var(--background);
+    z-index: 10;
+    border-top: solid 1px var(--textcolor-X);
+  "
+  call="snackbar"
+>
+  <div class="barContent z-10">
+    <span matSnackBarActions class="flex justify-center items-center">
+      <button mat-button matSnackBarAction routerLink="/home">🧭</button>
+      <button mat-button matSnackBarAction routerLink="/card">🛒</button>
+      <button mat-button matSnackBarAction routerLink="/profile">👷‍♂️</button>
+    </span>
+  </div>
+</div>
 <router-outlet></router-outlet>

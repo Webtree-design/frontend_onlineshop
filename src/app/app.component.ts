@@ -12,13 +12,4 @@ export class AppComponent {
   products: any[] = [];
 
   constructor(private dataService: DataService) {}
-
-  // ngOnInit() {
-  //   this.getProducts();
-  // }
-
-  // async getProducts() {
-  //   const data = await this.dataService.getProducts();
-  //   this.products = data;
-  // }
 }

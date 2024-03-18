@@ -80,11 +80,27 @@ export class HomeComponent {
   }
 
   onBrandChange(): void {
+    this.searchbarValue = '';
     this.selectedModell = '';
     this.selectedMotor = '';
   }
-
+  onBrandReset() {
+    this.selectedBrand = '';
+    this.selectedModell = '';
+    this.selectedMotor = '';
+  }
   onModellChange(): void {
+    this.searchbarValue = '';
+    this.selectedMotor = '';
+  }
+  onModellReset() {
+    this.selectedModell = '';
+    this.selectedMotor = '';
+  }
+  onMotorChange(): void {
+    this.searchbarValue = '';
+  }
+  onMotorReset() {
     this.selectedMotor = '';
   }
 

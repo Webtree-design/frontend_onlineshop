@@ -11,38 +11,43 @@
 
 <div class="items" style="background-color: var(--background)">
   <!-- //////////HEADER////////// -->
-  <div class="mx-auto w-[100%] max-w-screen-sm">
-    <div
-      class="gap-x-4 w-[100%] flex flex-row items-center justify-center p-3 search-form"
-    >
-      <mat-form-field>
-        <mat-label>Was suchen Sie?</mat-label>
-        <input
-          #search
-          matInput
-          type="text"
-          [(ngModel)]="searchbarValue"
-          (keyup.enter)="submitFilterSearchbar(searchbarValue)"
-        />
+  <div
+    class="w-[100%]"
+    [ngClass]="!filterPanel.expanded ? 'border-bottom-avtive' : 'border-bottom'"
+  >
+    <div class="mx-auto max-w-screen-sm">
+      <div
+        class="gap-x-4 w-[100%] flex flex-row items-center justify-center p-3 search-form"
+      >
+        <mat-form-field>
+          <mat-label>Was suchen Sie?</mat-label>
+          <input
+            #search
+            matInput
+            type="text"
+            [(ngModel)]="searchbarValue"
+            (keyup.enter)="submitFilterSearchbar(searchbarValue)"
+          />
 
+          <button
+            (click)="submitFilterSearchbar(searchbarValue)"
+            matSuffix
+            mat-icon-button
+            aria-label="search"
+            class="mr-2"
+          >
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
         <button
-          (click)="submitFilterSearchbar(searchbarValue)"
+          (click)="filterPanel.expanded = !filterPanel.expanded"
           matSuffix
           mat-icon-button
-          aria-label="search"
-          class="mr-2"
+          aria-label="filter"
         >
-          <mat-icon>search</mat-icon>
+          <mat-icon>filter_list</mat-icon>
         </button>
-      </mat-form-field>
-      <button
-        (click)="filterPanel.expanded = !filterPanel.expanded"
-        matSuffix
-        mat-icon-button
-        aria-label="filter"
-      >
-        <mat-icon>filter_list</mat-icon>
-      </button>
+      </div>
     </div>
   </div>
 
@@ -66,7 +71,7 @@
               </mat-option>
             </mat-select>
             <mat-icon
-              (click)="selectedBrand = ''"
+              (click)="onBrandReset()"
               style="right: 0; bottom: 15px"
               class="absolute"
               *ngIf="selectedBrand"
@@ -90,7 +95,7 @@
               </mat-option>
             </mat-select>
             <mat-icon
-              (click)="selectedModell = ''"
+              (click)="onModellReset()"
               style="right: 0; bottom: 15px"
               class="absolute"
               *ngIf="selectedModell"
@@ -104,6 +109,7 @@
               [(ngModel)]="selectedMotor"
               [ngClass]="selectedMotor ? 'hideArrow' : ''"
               [disabled]="!selectedModell"
+              (selectionChange)="onMotorChange()"
             >
               <mat-option
                 *ngFor="
@@ -117,7 +123,7 @@
               </mat-option>
             </mat-select>
             <mat-icon
-              (click)="selectedMotor = ''"
+              (click)="onMotorReset()"
               style="right: 0; bottom: 15px"
               class="absolute"
               *ngIf="selectedMotor"
@@ -125,10 +131,20 @@
             >
           </mat-form-field>
         </div>
-        <div class="px-3 pb-6 filter-form-buttons flex">
+        <div
+          class="px-3 pb-3 filter-form-buttons flex"
+          style="border-bottom: solid 1px var(--textcolor-X)"
+        >
           <span class="basis-3/12"></span>
           <div class="basis-6/12">
-            <button mat-raised-button (click)="submitFilter()">Suchen</button>
+            <button
+              mat-raised-button
+              (click)="
+                submitFilter(); filterPanel.expanded = !filterPanel.expanded
+              "
+            >
+              Suchen
+            </button>
           </div>
           <span class="basis-3/12">
             <span class="flex flex-row justify-center items-center"> </span>

@@ -19,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistartionComponent } from './components/registartion/registartion.component';
+import { CardComponent } from './components/card/card.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { RegistartionComponent } from './components/registartion/registartion.co
     HomeComponent,
     LoginComponent,
     RegistartionComponent,
+    CardComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +42,7 @@ import { RegistartionComponent } from './components/registartion/registartion.co
     FormsModule,
     MatExpansionModule,
     MatSelectModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],
